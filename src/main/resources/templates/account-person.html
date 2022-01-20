@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+<style>
+    .hidden {
+        display: none;
+    }
+    .show{
+        display: block;
+    }
+</style>
+<body>
+<div th:replace="common/common :: navbar(page='Account')"/>
+<div th:object="${user}" >
+    <div th:insert="common/common :: account-information(user=${user})"/>
+    <p>Surname</p>
+    <p th:text="*{surname}"></p>
+    <p>First Name</p>
+    <p th:text="*{name}"></p>
+    <a href="/web/account-change">Change account information</a>
+</div>
+</body>
+</html>

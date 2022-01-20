@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+'left to right direction
+:Customer: as cu
+:Person: as p
+package LogisticSystem{
+(Create Account) as UC1
+'(Delete Account) as UC2
+(Login Account) as UC3
+(Create Delivery) as UC4
+(Request Delivery Status) as UC5
+(Cancel Delivery) as UC6
+(Store Delivery) as UC7
+(Recall Delivery) as UC8
+}
+
+:Company: as c
+cu--> UC1
+'cu--> UC2
+cu--> UC3
+cu--> UC4
+cu--> UC5
+cu--> UC6
+
+cu<|-- c
+cu<|-- p
+c--> UC7
+c--> UC8
+
+@enduml

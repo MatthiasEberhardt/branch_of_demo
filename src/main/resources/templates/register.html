@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+<body>
+<div th:replace="common/common :: navbar(page='Login')"/>
+<h1>Register</h1>
+
+<!-- style tag below copied from https://www.baeldung.com/spring-thymeleaf-error-messages -->
+<style>
+    .error {
+        color: red;
+    }
+</style>
+<script>
+    //changeVisibility() copied from https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
+    function changeVisibility(id){
+        let elem = document.getElementById(id);
+        if (elem.style.display === "none") {
+            elem.style.display = "block";
+        } else {
+            elem.style.display = "none";
+        }
+    }
+    function changeElements(){
+        changeVisibility("companyNameDiv");
+        changeVisibility("firstNameDiv");
+        changeVisibility("lastNameDiv");
+    }
+    function changeRole(newRole){
+        let roleField = document.getElementById("role");
+        roleField.value = newRole;
+    }
+    function switchToPerson(){
+        changeElements();
+        changeRole("person");
+    }
+
+    function switchToCompany(){
+        changeElements();
+        changeRole("company");
+    }
+</script>
+
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+        <input type="radio" onclick="switchToPerson()" name="options" id="option1" autocomplete="off" checked> Register as private customer
+    </label>
+    <label class="btn btn-secondary">
+        <input type="radio" onclick="switchToCompany()" name="options" id="option2" autocomplete="off"> Register as company
+    </label>
+    <label class="btn btn-secondary">
+        <input type="radio"  name="options" id="option3" autocomplete="off"> Register as administrator
+    </label>
+</div>
+
+
+<form class="row g-3" action="#" th:action="@{/web/register}" th:object="${registrationDTO}" method="post" enctype="utf8">
+    <!--
+    the attribute th:class="${#fields.hasErrors('...')}? error" is copied from
+    https://www.baeldung.com/spring-thymeleaf-error-messages
+
+    the tag displaying the error message
+    <p th:each="error: ${#fields.errors('...')}"
+           th:text="${error}">Validation error</p>
+    is copied from https://www.baeldung.com/registration-with-spring-mvc-and-spring-security
+    -->
+    <div th:replace="common/common :: standard-input(fieldName='username',classInf='col-md-6',
+    inputType='text',inputName='Username',errorName='Username')"/>
+    <!--<div class="col-md-6">
+        <label for="inputUsername4" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputUsername4" th:field="*{username}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('username')}"
+           th:text="${error}" th:class="${#fields.hasErrors('username')}? error">Validation error</p>
+    </div>-->
+    <div th:replace="common/common :: standard-input(fieldName='password',classInf='col-md-6',
+    inputType='password',inputName='Password',errorName='Password')"/>
+    <!--<div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword4" th:field="*{password}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('password')}"
+           th:text="${error}" th:class="${#fields.hasErrors('password')}? error">Validation error</p>
+    </div>-->
+    <div th:replace="common/common :: standard-input(fieldName='passwordConfirmed',classInf='col-md-6',
+    inputType='password',inputName='Confirm password',errorName='Password confirmation')"/>
+    <!--<div class="col-md-6">
+        <label for="inputPasswordRepeat4" class="form-label">confirm Password</label>
+        <input type="password" class="form-control" id="inputPasswordRepeat4" th:field="*{passwordConfirmed}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('passwordConfirmed')}"
+           th:text="${error}" th:class="${#fields.hasErrors('passwordConfirmed')}? error">Validation error</p>
+    </div>-->
+
+    <!--<div class="col-12">
+        <label for="inputStreet" class="form-label">Street</label>
+        <input type="text" class="form-control" id="inputStreet" placeholder="Main St" th:field="*{street}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('street')}"
+           th:text="${error}" th:class="${#fields.hasErrors('street')}? error">Validation error</p>
+    </div>-->
+
+    <!--<div class="col-12">
+        <label for="inputHouseNr" class="form-label">House Nr</label>
+        <input type="number" class="form-control" id="inputHouseNr" th:field="*{houseNr}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('houseNr')}"
+           th:text="${error}" th:class="${#fields.hasErrors('houseNr')}? error">Validation error</p>
+    </div>-->
+    <br>
+    <div th:replace="common/common :: standard-input(fieldName='city',classInf='col-md-3',
+    inputType='text',inputName='City',errorName='City')"/>
+    <!--<div class="col-md-6">
+        <label for="inputCity" class="form-label">City</label>
+        <input type="text" class="form-control" id="inputCity" th:field="*{city}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('city')}"
+           th:text="${error}" th:class="${#fields.hasErrors('city')}? error">Validation error</p>
+    </div>-->
+    <div th:replace="common/common :: standard-input(fieldName='postalCode',classInf='col-md-3',
+    inputType='text',inputName='Postal code',errorName='Postal code')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='street',classInf='col-md-3',
+    inputType='text',inputName='Street',errorName='Street')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='houseNr',classInf='col-md-3',
+    inputType='number',inputName='House number',errorName='House number')"/>
+    <!--<div class="col-md-2">
+        <label for="inputZip" class="form-label">Zip</label>
+        <input type="text" class="form-control" id="inputZip" th:field="*{postalCode}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('postalCode')}"
+           th:text="${error}" th:class="${#fields.hasErrors('postalCode')}? error">Validation error</p>
+    </div>-->
+
+
+    <div class="col-md-6" id="companyNameDiv" style="display:none">
+        <div th:replace="common/common :: standard-input(fieldName='companyName',classInf=' ',
+        inputType='text',inputName='Company Name',errorName='Company Name')"/>
+    </div>
+
+
+    <!--<div class="col-md-6" id="companyNameDiv" style="display:none">
+        <label for="inputCompanyName" class="form-label">Company Name</label>
+        <input type="text" class="form-control" id="inputCompanyName" th:field="*{companyName}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('companyName')}"
+           th:text="${error}" th:class="${#fields.hasErrors('companyName')}? error">Validation error</p>
+    </div>-->
+    <div class="col-md-6" id="firstNameDiv" style="display:block">
+        <div th:replace="common/common :: standard-input(fieldName='firstName',classInf=' ',
+        inputType='text',inputName='First Name',errorName='First Name')"/>
+    </div>
+    <!--<div class="col-md-6" id="firstNameDiv" style="display:block">
+        <label for="inputFirstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="inputFirstName" th:field="*{firstName}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('firstName')}"
+           th:text="${error}" th:class="${#fields.hasErrors('firstName')}? error">Validation error</p>
+    </div>-->
+    <div class="col-md-6" id="lastNameDiv" style="display:block">
+        <div th:replace="common/common :: standard-input(fieldName='familyName',classInf=' ',
+        inputType='text',inputName='Family Name',errorName='Family Name')"/>
+    </div>
+    <!--<div class="col-md-6" id="lastNameDiv" style="display:block">
+        <label for="inputLastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="inputLastName" th:field="*{familyName}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('familyName')}"
+           th:text="${error}" th:class="${#fields.hasErrors('familyName')}? error">Validation error</p>
+    </div>-->
+
+    <input type="hidden" th:field="*{role}"/>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+</form>
+</body>
+</html>

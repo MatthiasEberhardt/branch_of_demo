@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+<body>
+<div th:replace="common/common :: navbar(page='New-Delivery')"/>
+<form class="row g-3" th:object="${deliveryDTO2}" th:action="@{/web/new-delivery}" method="post">
+    <p>Receiver Address</p>
+    <div class="col-md-6">
+        <label for="inputReceiverCity" class="form-label">City</label>
+        <input type="text" class="form-control" id="inputReceiverCity" th:field="*{city}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('city')}"
+           th:text="${error}" th:class="${#fields.hasErrors('city')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverPostalCode" class="form-label">PostalCode</label>
+        <input type="text" class="form-control" id="inputReceiverPostalCode" th:field="*{postalCode}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('postalCode')}"
+           th:text="${error}" th:class="${#fields.hasErrors('postalCode')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverStreet" class="form-label">Street</label>
+        <input type="text" class="form-control" id="inputReceiverStreet" th:field="*{street}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('street')}"
+           th:text="${error}" th:class="${#fields.hasErrors('street')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverHouseNr" class="form-label">HouseNr</label>
+        <input type="number" class="form-control" id="inputReceiverHouseNr" th:field="*{houseNr}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('houseNr')}"
+           th:text="${error}" th:class="${#fields.hasErrors('houseNr')}? error">Validation error</p>
+    </div>
+
+    <p>Add new Article</p>
+    <div class="col-md-2">
+        <label for="inputArticleWidth" class="form-label">Width</label>
+        <input type="number" class="form-control" id="inputArticleWidth" th:field="*{articleWidth}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleWidth')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleWidth')}? error">Validation error</p>
+    </div>
+    <div class="col-md-2">
+        <label for="inputArticleHeight" class="form-label">Height</label>
+        <input type="number" class="form-control" id="inputArticleHeight" th:field="*{articleHeight}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleHeight')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleHeight')}? error">Validation error</p>
+    </div>
+    <div class="col-md-2">
+        <label for="inputArticleLength" class="form-label">Length</label>
+        <input type="number" class="form-control" id="inputArticleLength" th:field="*{articleLength}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleLength')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleLength')}? error">Validation error</p>
+    </div>
+    <div class="col-md-2">
+        <label for="inputArticleWeight" class="form-label">Weight</label>
+        <input type="number" class="form-control" id="inputArticleWeight" th:field="*{articleWeight}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleWeight')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleWeight')}? error">Validation error</p>
+    </div>
+    <div class="col-md-2">
+        <label for="inputArticleNumber" class="form-label">Amount</label>
+        <input type="number" class="form-control" id="inputArticleNumber" th:field="*{articleNumber}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleNumber')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleNumber')}? error">Validation error</p>
+    </div>
+    <div class="col-md-12">
+        <label for="inputArticleDescription" class="form-label">Description</label>
+        <input type="text" class="form-control" id="inputArticleDescription" th:field="*{articleDescription}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleDescription')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleDescription')}? error">Validation error</p>
+    </div>
+    <button class="col-md-2 btn btn-primary" type="submit">Add article</button>
+
+
+
+
+    <p>Articles in Delivery</p>
+    <!--
+    th:block below is adapted from
+    https://stackoverflow.com/questions/30280131/thymeleaf-spring-nested-backing-object-is-not-binding-the-values-on-form-submit
+    error messages below copied from
+    https://stackoverflow.com/questions/34200637/form-binding-for-showing-errors-of-a-list
+    -->
+    <th:block th:each="article,loop : *{articles}" th:id="'article_'+${article.id}">
+        <div class="col-md-2">
+            <label th:class="form-label">Article Width
+                <input th:errorclass="is-invalid" class="form-control" type="number" th:name="'width_'+${article.id}" th:id="'width_'+${article.id}" th:field="*{articles[__${loop.index}__].width}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].width')}"
+                    th:errors="*{articles[__${loop.index}__].width}" th:class="${#fields.hasErrors('articles[__${loop.index}__].width')}? error">Validation Error</p>
+            </label>
+        </div>
+        <div class="col-md-2">
+            <label th:class="form-label">Article Length
+                <input th:errorclass="is-invalid" class="form-control" type="number" th:name="'length_'+${article.id}" th:id="'length_'+${article.id}"  th:field="*{articles[__${loop.index}__].length}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].length')}"
+                   th:errors="*{articles[__${loop.index}__].length}" th:class="${#fields.hasErrors('articles[__${loop.index}__].length')}? error">Validation Error</p>
+            </label>
+        </div>
+        <div class="col-md-2">
+            <label th:class="form-label">Article Height
+                <input th:errorclass="is-invalid" class="form-control" type="number" th:name="'height_'+${article.id}" th:id="'height_'+${article.id}"  th:field="*{articles[__${loop.index}__].height}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].height')}"
+                   th:errors="*{articles[__${loop.index}__].height}" th:class="${#fields.hasErrors('articles[__${loop.index}__].height')}? error">Validation Error</p>
+            </label>
+        </div>
+        <div class="col-md-2">
+            <label th:class="form-label">Article Weight
+                <input th:errorclass="is-invalid" class="form-control" type="number" th:name="'weight_'+${article.id}" th:id="'weight_'+${article.id}"  th:field="*{articles[__${loop.index}__].weight}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].weight')}"
+                   th:errors="*{articles[__${loop.index}__].weight}" th:class="${#fields.hasErrors('articles[__${loop.index}__].weight')}? error">Validation Error</p>
+            </label>
+        </div>
+        <div class="col-md-2">
+            <label th:class="form-label">Number of Articles
+                <input th:errorclass="is-invalid" class="form-control" type="number" th:name="'number_'+${article.id}" th:id="'number_'+${article.id}"  th:field="*{articles[__${loop.index}__].number}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].number')}"
+                   th:errors="*{articles[__${loop.index}__].number}" th:class="${#fields.hasErrors('articles[__${loop.index}__].number')}? error">Validation Error</p>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <label th:class="form-label">Article Description
+                <input th:errorclass="is-invalid" class="form-control" type="text" th:name="'description_'+${article.id}" th:id="'description_'+${article.id}"  th:field="*{articles[__${loop.index}__].description}" />
+                <p th:if="${#fields.hasErrors('articles[__${loop.index}__].description')}"
+                   th:errors="*{articles[__${loop.index}__].description}" th:class="${#fields.hasErrors('articles[__${loop.index}__].description')}? error">Validation Error</p>
+            </label>
+        </div>
+        <button class="col-md-2 btn btn-primary" type="submit" name="delete" th:value="${loop.index}">Delete articles</button>
+        <!--<input class="col-md-2 btn btn-primary button" name="delete" th:value="${loop.index}" type="submit">
+        <p></p>-->
+    </th:block>
+    <p></p>
+    <button class="col-md-2 btn btn-primary button" name="create" value="create" type="submit">Create delivery and save</button>
+    <p th:if="${#fields.hasErrors('articles')}"
+       th:errors="*{articles}" th:class="${#fields.hasErrors('articles')}? error">Validation Error</p>
+
+</form>
+
+</body>
+</html>

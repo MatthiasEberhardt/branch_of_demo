@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+<body>
+<div th:replace="common/common :: navbar(page='Account')"/>
+<form th:object="${accountChangeDTO}">
+    <p th:text="*{username}"></p>
+    <div th:replace="common/common :: standard-input(classInf='col-md-12',inputType='text',fieldName='username',inputName='Username',
+    errorField='\'username\'')"></div>
+</form>
+</body>
+</html>

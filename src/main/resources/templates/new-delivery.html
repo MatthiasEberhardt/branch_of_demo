@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+<!--
+input form same as in register.html (only changed to match fields of object), therefore also copied from same places
+-->
+<body>
+<div th:replace="common/common :: navbar(page='New-Delivery')"/>
+<form th:object="${deliveryDTO}" th:action="@{/web/new-delivery}" method="post">
+    <div class="col-md-6">
+        <label for="inputReceiverCity" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputReceiverCity" th:field="*{city}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('city')}"
+           th:text="${error}" th:class="${#fields.hasErrors('city')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverPostalCode" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputReceiverPostalCode" th:field="*{postalCode}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('postalCode')}"
+           th:text="${error}" th:class="${#fields.hasErrors('postalCode')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverStreet" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputReceiverStreet" th:field="*{street}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('street')}"
+           th:text="${error}" th:class="${#fields.hasErrors('street')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputReceiverCity" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputReceiverHouseNr" th:field="*{houseNr}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('houseNr')}"
+           th:text="${error}" th:class="${#fields.hasErrors('houseNr')}? error">Validation error</p>
+    </div>
+
+
+    <div class="col-md-6">
+        <label for="inputArticleWidth" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleWidth" th:field="*{articleWidth}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleWidth')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleWidth')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputArticleHeight" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleHeight" th:field="*{articleHeight}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleHeight')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleHeight')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputArticleLength" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleLength" th:field="*{articleLength}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleLength')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleLength')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputArticleWeight" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleWeight" th:field="*{articleWeight}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleWeight')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleWeight')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputArticleNumber" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleNumber" th:field="*{articleNumber}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleNumber')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleNumber')}? error">Validation error</p>
+    </div>
+    <div class="col-md-6">
+        <label for="inputArticleDescription" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputArticleDescription" th:field="*{articleDescription}" th:errorclass="is-invalid">
+        <p th:each="error: ${#fields.errors('articleDescription')}"
+           th:text="${error}" th:class="${#fields.hasErrors('articleDescription')}? error">Validation error</p>
+    </div>
+
+
+    <input type="hidden" th:field="*{articleWidthList}">
+    <input type="hidden" th:field="*{articleHeightList}">
+    <input type="hidden" th:field="*{articleLengthList}">
+    <input type="hidden" th:field="*{articleNumberList}">
+    <input type="hidden" th:field="*{articleWeightList}">
+    <input type="hidden" th:field="*{articleDescriptionList}">
+</form>
+<form th:action="@{/web/from-new-to-deliveries}" method="post">
+    <button type="submit">Create Delivery</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+<body>
+<div th:replace="common/common :: navbar(page='New-Delivery')"/>
+<form class="row g-3" th:object="${deliveryDTO2}" th:action="@{/web/new-delivery}" method="post">
+    <p>Receiver Address</p>
+    <div th:replace="common/common :: standard-input(fieldName='city',classInf='col-md-6',
+    inputType='text',inputName='City',errorName='City')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='postalCode',classInf='col-md-6',
+    inputType='text',inputName='Postal Code',errorName='Postal Code')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='street',classInf='col-md-6',
+    inputType='text',inputName='Street',errorName='Street')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='houseNr',classInf='col-md-6',
+    inputType='number',inputName='House Nr',errorName='houseNr')"/>
+
+    <p>Add new Article</p>
+    <div th:replace="common/common :: standard-input(fieldName='articleWidth',classInf='col-md-2',
+    inputType='number',inputName='Article width (in mm)',errorName='Article width')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='articleHeight',classInf='col-md-2',
+    inputType='number',inputName='Article height (in mm)',errorName='Article height')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='articleLength',classInf='col-md-2',
+    inputType='number',inputName='Article length (in mm)',errorName='Article length')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='articleWeight',classInf='col-md-2',
+    inputType='number',inputName='Article weight (in g)',errorName='Article weight')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='articleNumber',classInf='col-md-2',
+    inputType='number',inputName='Amount of articles in delivery',errorName='Amount of articles')"/>
+
+    <div th:replace="common/common :: standard-input(fieldName='articleDescription',classInf='col-md-12',
+    inputType='text',inputName='Article description',errorName='Article description')"/>
+
+    <button class="col-md-2 btn btn-primary" type="submit">Add article</button>
+
+
+
+
+    <p>Articles in Delivery</p>
+    <!--
+    th:block below is adapted from
+    https://stackoverflow.com/questions/30280131/thymeleaf-spring-nested-backing-object-is-not-binding-the-values-on-form-submit
+    error messages below copied from
+    https://stackoverflow.com/questions/34200637/form-binding-for-showing-errors-of-a-list
+    -->
+    <th:block th:each="article,loop : *{articles}" th:id="'article_'+${article.id}">
+
+        <div th:replace="common/common :: list-input(classInf='col-md-2',inputType='number',inputName='Width of article',
+        property='width',listName='articles',loop=${loop},errorName='Article width')"/>
+
+        <div th:replace="common/common :: list-input(classInf='col-md-2',inputType='number',inputName='Length of article',
+        property='length',listName='articles',loop=${loop},errorName='Article length')"/>
+
+        <div th:replace="common/common :: list-input(classInf='col-md-2',inputType='number',inputName='Height of article',
+        property='height',listName='articles',loop=${loop},errorName='Height width')"/>
+
+        <div th:replace="common/common :: list-input(classInf='col-md-2',inputType='number',inputName='Weight of article',
+        property='weight',listName='articles',loop=${loop},errorName='Article weight')"/>
+
+        <div th:replace="common/common :: list-input(classInf='col-md-2',inputType='number',inputName='Number of articles',
+        property='number',listName='articles',loop=${loop},errorName='Article number')"/>
+
+        <div th:replace="common/common :: list-input(classInf='col-md-12',inputType='text',inputName='Article description',
+        property='description',listName='articles',loop=${loop},errorName='Article description')"/>
+        <button class="col-md-2 btn btn-primary" type="submit" name="delete" th:value="${loop.index}">Delete articles</button>
+        <!--<input class="col-md-2 btn btn-primary button" name="delete" th:value="${loop.index}" type="submit">
+        <p></p>-->
+    </th:block>
+    <p></p>
+    <button class="col-md-2 btn btn-primary button" name="create" value="create" type="submit">Create delivery and save</button>
+    <p th:if="${#fields.hasErrors('articles')}"
+       th:errors="*{articles}" th:class="${#fields.hasErrors('articles')}? error">Validation Error</p>
+
+</form>
+
+</body>
+</html>

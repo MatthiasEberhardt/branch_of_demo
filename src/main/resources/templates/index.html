@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="common/common :: header" />
+<body>
+<div th:replace="common/common :: navbar(page='Home')"/>
+<h1>Welcome to Logistics</h1>
+<form th:action="@{/web/login}" method="get">
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+<form th:action="@{/web/register}" method="get">
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+</body>
+</html>

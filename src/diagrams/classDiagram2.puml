@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+enum DeliveryStatus{
+    AT_SENDER
+    TO_WAREHOUSE
+    AT_WAREHOUSE
+    TO_RECEIVER
+    AT_RECEIVER
+    CANCELLED
+}
+
+enum VehicleStatus{
+    AVAILABLE
+     WAREHOUSE_TO_SENDER
+     SENDER_TO_WAREHOUSE
+     WAREHOUSE_TO_RECEIVER
+     RECEIVER_TO_WAREHOUSE
+    CANCELED
+}
+
+class Vehicle{
+    id: int
+    status: VehicleStatus
+    arrivalDate: Date
+    cancelDate: Date
+    start: Address
+    destination: Address
+    delivery: Delivery
+}
+
+abstract class Customer{
+    id: int
+    Address: address
+    username: String
+    password: String
+}
+class Address{
+    houseNr: int
+    street: String
+    city: String
+    postalCode: String
+}
+class Person{
+    surname: String
+    name: String
+}
+
+
+class Company{
+    name: String
+}
+class Article{
+    id: int
+    height: int
+    width: int
+    depth: int
+    weight: int
+    description: String
+}
+
+class Order{
+    'List<Artikel> lieferung
+    id: int
+    sender: Customer
+    'receiver: Address
+    priorityDate: Date
+    status: DeliveryStatus
+    vehicle: Vehicle
+}
+
+class DeliveryOrder{
+    receiver: Address
+}
+
+class StoreOrder{
+    recallDate: Date
+}
+
+Customer <|-- Person
+Customer <|--  Company
+Article <|-- Letter
+
+Order<|-- DeliveryOrder
+Order<|-- StoreOrder
+
+
+Customer -- Address
+Order "1" *-- "many" Article : contains
+@enduml
